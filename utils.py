@@ -12,12 +12,14 @@ def id(x):
     return x
 
 class TextLoader(object):
-    def __init__(self, localPath="Nothing!", fname="notdeclared!"):
+    def __init__(self, localPath="Nothing!", fname="notdeclared!", textName=None, author=None):
         self.fname = fname
+        self.title = textName
+        self.author = author
         self.fp = os.path.join(localPath, fname)
 
     def _load(self):
-        return loadTxt(self.fp)
+            return (self.title, self.author, loadTxt(self.fp))
 
     def yieldParagraphs(self):
         return map(lambda x: x, self._load())
@@ -38,7 +40,7 @@ def loadPdf(fp):
 
 
 def standardSentenceProcessing(s):
-    return s.replace("?", " ? ").replace("!", " ! ").replace(".", " . ").replace("’’", ' " ').replace("‘‘", ' " ').replace(":", " : ").replace("'", " ' ").replace(";", " ; ").replace("'", " ' ").replace(",", " , ").replace("-", " - ").replace("(", " ( ").replace(")", " ) ").replace('"', ' " ').lower().split()
+    return s.replace("«", '"').replace("»", '"').replace("“", '"').replace("”", '"').replace("?", " ? ").replace("!", " ! ").replace(".", " . ").replace("’’", ' " ').replace("‘‘", ' " ').replace(":", " : ").replace("'", " ' ").replace(";", " ; ").replace("'", " ' ").replace(",", " , ").replace("-", " - ").replace("(", " ( ").replace(")", " ) ").replace('"', ' " ').lower().split()
 
 
 def mkGroup(t):
